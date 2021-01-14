@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "node": "nodemon ./bin/www",
+    "react": "cd ./react_front && npm start",
+    "start": "concurrently \"npm run node\" \"npm run react\""
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
