@@ -1,13 +1,18 @@
-const { readFileSync, writeFileSync } = require('fs');
 const db = require('../db/models');
 
 module.exports = {
     getAllMovements: async (req, res) => {
         try {
             let data = await db.budget.findAll();
-            return res.status(200).json({
-                data,
-                message: "Data found"
+            if (data.length > 0) {
+                return res.status(200).json({
+                    data,
+                    message: "Data found"
+                })
+            }
+            return res.status(400).json({
+                data: [],
+                message: "Empty"
             })
         } catch (err) {
             console.log(err);
@@ -20,9 +25,15 @@ module.exports = {
     getMovement: async (req, res) => {
         try {
             let data = await db.budget.findByPk(req.params.id);
-            return res.status(200).json({
-                data,
-                message: "Data found"
+            if (data) {
+                return res.status(200).json({
+                    data,
+                    message: "Data found"
+                })
+            }
+            return res.status(404).json({
+                data: "",
+                message: "Not Found"
             })
         } catch (err) {
             console.log(err);
@@ -38,7 +49,6 @@ module.exports = {
         }
         try {
             const movement = await db.budget.create(movement_obj);
-
             return res.status(201).json({
                 data: movement,
                 message: "Movement stored"
@@ -57,10 +67,15 @@ module.exports = {
         }
         try {
             const movement = await db.budget.update(movement_obj, { where: { id: req.params.id } });
-            return res.status(201).json({
-                data: movement,
-                message: "Movement updated"
-            });
+            if (movement[0]) {
+                return res.status(201).json({
+                    data: "id: " + req.params.id,
+                    message: "Movement updated"
+                });
+            }
+            return res.status(404).json({
+                message: "Cannot be updated, object not found..."
+            })
         } catch (err) {
             console.log(err);
             return res.status(400).json({
@@ -71,10 +86,16 @@ module.exports = {
 
     deleteMovement: async (req, res) => {
         try {
-            const movement = await db.budget.delete({ where: { id: req.params.id } });
-            return res.status(201).json({
-                data: movement,
-                message: "Movement deleted"
+            const movement = await db.budget.destroy({ where: { id: req.params.id } });
+            console.log(movement);
+            if (movement) {
+                return res.status(201).json({
+                    data: "id: " + req.params.id,
+                    message: "Movement deleted"
+                })
+            }
+            return res.status(404).json({
+                message: "Cannot delete, object not found..."
             })
         } catch (err) {
             console.log(err);

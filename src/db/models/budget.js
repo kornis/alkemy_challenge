@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    deposit_name: DataTypes.STRING,
+    movement_name: DataTypes.STRING,
     qty: DataTypes.INTEGER,
     type:{
       type: DataTypes.ENUM('in','out'),
