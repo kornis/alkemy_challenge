@@ -1,33 +1,37 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('deposits', {
+    return queryInterface.createTable('budget', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      id: {
         type: Sequelize.BIGINT
       },
-      deposit_name: {
+      movement_name: {
         type: Sequelize.STRING
       },
       qty: {
         type: Sequelize.INTEGER
       },
-      createdAt: {
+      type: {
+        type: Sequelize.ENUM('in','out'),
+      },
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
+        type: Sequelize.DATE
+      },
+      deleted_at: {
+        allowNull: true,
         type: Sequelize.DATE
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('deposits');
+    return queryInterface.dropTable('budget');
   }
 };

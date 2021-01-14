@@ -3,6 +3,9 @@ const router = express.Router();
 const budgetController = require('../controllers/budgetController');
 
 /* GET home page. */
-router.get('/', budgetController.index);
+router.get('/movements', budgetController.getAllMovements);
+router.post('/movement', budgetController.storeMovement);
+router.put('/movement/:id', budgetController.updateMovement);
+router.delete('/movement/:id', budgetController.deleteMovement);
 
 module.exports = router;

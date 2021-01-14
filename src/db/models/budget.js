@@ -1,21 +1,26 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const deposit = sequelize.define('deposit', {
+  const budget = sequelize.define('budget', {
     id: {
       type: DataTypes.BIGINT,
       primaryKey: true,
+      autoIncrement: true,
     },
     deposit_name: DataTypes.STRING,
-    qty: DataTypes.INTEGER
+    qty: DataTypes.INTEGER,
+    type:{
+      type: DataTypes.ENUM('in','out'),
+      nullable: false,
+    }
   }, {
-    tableName: 'deposit',
+    tableName: 'budget',
     paranoid: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
     deletedAt: "deleted_at",
   });
-  deposit.associate = function(models) {
+  budget.associate = function(models) {
     // associations can be defined here
   };
-  return deposit;
+  return budget;
 };
