@@ -1,5 +1,7 @@
 import React from 'react';
 import ListadoRegistros from './ListadoRegistros';
+import MainCard from './MainCard';
+import InfoCard from './InfoCard';
 
 class Main extends React.Component{
 
@@ -23,7 +25,6 @@ fetchData = async () => {
             data: data.data,
             loading: false,
         })
-        console.log('llega la data', this.state.data)
     }catch(err){
         console.error(err);
     }
@@ -43,8 +44,20 @@ componentDidMount(){
         this.fetchData();
      }
       
-
-
+     
+      handleTotal = () =>{
+        
+        return this.state.data.map(value => {
+            if(value.type == 'in'){
+                return value.qty
+            }
+            else{
+                return value.qty * -1;
+            }
+        }).reduce((acc, val) => acc + val);
+        }
+        
+        
     formHandler = async (e) => {
         e.preventDefault();
         this.state.movement_name = e.target[0].value;
@@ -65,17 +78,22 @@ componentDidMount(){
     }
 
     render(){
-        console.log('loading', this.state)
         if(this.state.loading){
             return null
         }else{
 
     return(
         <>
+            <section className="info_cards">
+                <MainCard getTotal={this.handleTotal} />
+                <InfoCard lastMovement={this.state.data[this.state.data.length -1]}/>
+            </section>
+
             <div className="input_data">
+                <h3>Nuevo registro</h3>
                 <form onSubmit={this.formHandler}>
                     <input type="text" placeholder="Nombre del movimiento" name="movement_name" />
-                    <input type="number" name="qty" />
+                    <input type="number" name="qty" placeholder="Monto $" />
                     <select name="type">
                         <option value="in">Ingreso</option>
                         <option value="out">Egreso</option>

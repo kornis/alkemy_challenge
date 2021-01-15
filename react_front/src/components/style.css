@@ -1,0 +1,103 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+
+li {
+    list-style: none;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+.input_data {
+    margin-bottom: 25px;
+}
+
+.input_data input {
+    padding: 10px 18px;
+    border: 2px solid gray;
+    border-radius: 15px;
+    margin-right: 5px;
+    outline: none;
+}
+
+select {
+    padding: 10px 18px;
+    border: 2px solid gray;
+    border-radius: 15px;
+    margin-right: 5px;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90px;
+    background-color: rgb(147, 176, 201);
+    margin-bottom: 15px;
+}
+
+.card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    border-radius: 12px;
+    border: 3px solid rgba(147, 176, 201, 1);
+    width: 250px;
+    height: 100px;
+    background-color:rgba(147, 176, 201, 0.5);
+}
+
+.main_card {
+
+}
+
+.info_card {
+
+}
+
+.card span {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.info_cards {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(147,176,201,0.6);
+}
+
+.container {
+    width: 90%;
+    margin:auto;
+}
+
+.input_data form {
+    display: flex;
+    flex-wrap: nowrap;
+   
+}
+
+.action {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+
+}
+
+footer {
+    text-align: center;
+    background-color: cornflowerblue;
+    height: 40px;
+    margin-top: 150px;
+}
+
+

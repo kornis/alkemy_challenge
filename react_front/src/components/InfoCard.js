@@ -1,12 +1,12 @@
 import React from 'react';
 
-function InfoCard(){
+function InfoCard(props){
     return(
         <>
-            <div className="infoCard">
+            <div className="info_card card">
                 <div>
                     <p>Último movimiento</p>
-                    <h2><span>OUT</span> $520</h2>
+                    <span><span className="type_movement">{props.lastMovement.type}</span> ${props.lastMovement.qty}</span>
                 </div>
             </div>
         </>

@@ -1,12 +1,14 @@
 import React from 'react';
 
-function MainCard(){
+function MainCard(props){
+    
+    
     return(
         <>
-            <div className="mainCard">
+            <div className="main_card card">
                 <div>
                     <p>Dinero disponible</p>
-                    <h2>$100000</h2>
+                    <span>${props.getTotal()}</span>
                 </div>
             </div>
         </>
