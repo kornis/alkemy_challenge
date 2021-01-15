@@ -2,7 +2,7 @@ import React from 'react';
 import ListadoRegistros from './ListadoRegistros';
 import MainCard from './MainCard';
 import InfoCard from './InfoCard';
-
+import Form from './Form';
 class Main extends React.Component{
 
     state = {
@@ -10,7 +10,9 @@ class Main extends React.Component{
         qty: 0,
         type: '',
         data: "",
-        loading: true
+        loading: true,
+        edit: false,
+        dataToEdit:""
     }
 
 
@@ -57,6 +59,21 @@ componentDidMount(){
         }).reduce((acc, val) => acc + val);
         }
         
+        editMovement = async (obj) => {
+            this.setState({loading: true})
+           const response = await fetch('http://localhost:3000/movement/'+obj.dataset.id);
+           const data = await response.json()
+           
+            this.setState({
+                edit:true,
+                dataToEdit: data.data,
+                loading:false
+            });
+        }
+      handleEdit = (e) => {
+          this.editMovement(e.target);
+      }
+
         
     formHandler = async (e) => {
         e.preventDefault();
@@ -66,22 +83,31 @@ componentDidMount(){
         let info = {
             ...this.state
         }
+       if(this.state.edit){
+        await fetch('http://localhost:3000/movement/'+this.state.dataToEdit.id,{
+            method: 'PUT',
+            headers:{
+                'Content-Type': 'application/json'
+            }, 
+            body: JSON.stringify(info)
+        });    
+       }else{
        await fetch('http://localhost:3000/movement',{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'
             }, 
             body: JSON.stringify(info)
-        });
+        });}
         this.fetchData();
-        
+    
     }
 
     render(){
         if(this.state.loading){
             return null
         }else{
-
+ 
     return(
         <>
             <section className="info_cards">
@@ -90,20 +116,17 @@ componentDidMount(){
             </section>
 
             <div className="input_data">
-                <h3>Nuevo registro</h3>
-                <form onSubmit={this.formHandler}>
-                    <input type="text" placeholder="Nombre del movimiento" name="movement_name" />
-                    <input type="number" name="qty" placeholder="Monto $" />
-                    <select name="type">
-                        <option value="in">Ingreso</option>
-                        <option value="out">Egreso</option>
-                    </select>
-                    <input type="submit" value="Guardar" />
-                </form>
+                <Form 
+                title={ this.state.edit ? "Editar registro" : "Nuevo Registro" }
+                movement_name={ this.state.edit ? this.state.dataToEdit.movement_name : "" }
+                qty={ this.state.edit ? this.state.dataToEdit.qty : "" }
+                function={this.formHandler}
+                />
+                
             </div>
 
             <div className="data_list">
-               <ListadoRegistros data={ this.state } handleDelete={this.handleDelete} />
+               <ListadoRegistros data={ this.state } handleDelete={this.handleDelete} handleEdit={this.handleEdit} />
             </div>
         </>
     )}}

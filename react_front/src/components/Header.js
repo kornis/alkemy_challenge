@@ -4,7 +4,7 @@ function Header(){
     return(
         <>
             <header>
-                <h1>Título</h1>
+                <h1>Presupuesto Personal</h1>
             </header>
         </>
     )
