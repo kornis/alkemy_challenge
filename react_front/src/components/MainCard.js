@@ -1,9 +1,9 @@
 import React from 'react';
 
-function MainCard(props){
-    
-    
-    return(
+function MainCard(props) {
+
+
+    return (
         <>
             <div className="main_card card">
                 <div>

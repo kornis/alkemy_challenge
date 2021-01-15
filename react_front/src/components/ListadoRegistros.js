@@ -24,14 +24,14 @@ const ListadoRegistros = (props) => {
                             <td>{value.qty}</td>
                             <td>{value.type}</td>
                             <td className="action">
-                                
-                                    <form onSubmit={props.handleDelete}>
-                                        <input type="text" hidden defaultValue={value.id} />
-                                        <button className="badge badge-danger">Eliminar</button>
-                                    </form>
 
-                                    <button className="badge badge-warning" onClick={props.handleEdit} data-id={value.id}>Editar</button>
-                            
+                                <form onSubmit={props.handleDelete}>
+                                    <input type="text" hidden defaultValue={value.id} />
+                                    <button className="badge badge-danger">Eliminar</button>
+                                </form>
+
+                                <button className="badge badge-warning" onClick={props.handleEdit} data-id={value.id}>Editar</button>
+
                             </td>
 
                         </tr>)
