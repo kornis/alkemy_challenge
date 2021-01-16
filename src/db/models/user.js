@@ -1,5 +1,3 @@
-const { DataTypes } = require("sequelize/types");
-
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('users', {
         id:{
@@ -9,9 +7,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         email: DataTypes.STRING,
         password: DataTypes.STRING,
-        deleted_at: DataTypes.TIMESTAMPS,
-        updated_at: DataTypes.TIMESTAMPS,
-        created_at: DataTypes.TIMESTAMPS
+        deleted_at: DataTypes.DATE,
+        updated_at: DataTypes.DATE,
+        created_at: DataTypes.DATE
     },
     {
         tableName: 'users',
@@ -20,6 +18,6 @@ module.exports = (sequelize, DataTypes) => {
         updatedAt: 'updated_at',
         deletedAt: 'deleted_at'
     })
-    
+
     return User;
 }
