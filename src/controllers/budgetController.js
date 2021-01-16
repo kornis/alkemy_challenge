@@ -63,7 +63,8 @@ module.exports = {
 
     updateMovement: async (req, res) => {
         const movement_obj = {
-            ...req.body
+            movement_name: req.body.movement_name,
+            qty: req.body.qty
         }
         try {
             const movement = await db.budget.update(movement_obj, { where: { id: req.params.id } });

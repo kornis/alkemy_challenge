@@ -2,7 +2,7 @@ import React from 'react';
 import ListadoRegistros from './ListadoRegistros';
 import MainCard from './MainCard';
 import InfoCard from './InfoCard';
-import Form from './Form';
+import Form from './Form.jsx';
 class Main extends React.Component {
 
     state = {
@@ -123,6 +123,7 @@ class Main extends React.Component {
                             movement_name={this.state.edit ? this.state.dataToEdit.movement_name : ""}
                             qty={this.state.edit ? this.state.dataToEdit.qty : ""}
                             function={this.formHandler}
+                            edit={this.state.edit}
                         />
 
                     </div>

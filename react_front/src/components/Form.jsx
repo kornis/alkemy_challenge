@@ -11,10 +11,12 @@ const Form = (props) => {
             <form onSubmit={props.function}>
                 <input type="text" placeholder="Nombre del movimiento" name="movement_name" value={movement_name} onChange={e => setMovement_name(e.target.value)} />
                 <input type="number" name="qty" placeholder="Monto $" value={qty} onChange={e => setQty(e.target.value)} />
+                { !props.edit &&
                 <select name="type">
                     <option value="in">Ingreso</option>
                     <option value="out" >Egreso</option>
                 </select>
+                }
                 <input type="submit" defaultValue="Guardar" />
             </form>
         </>
