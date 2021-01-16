@@ -5,6 +5,8 @@ const Form = (props) => {
 
     const [movement_name, setMovement_name] = useState(props.movement_name);
     const [qty, setQty] = useState(props.qty);
+    const [date, setDate] = useState(props.date);
+    
     return (
         <>
             <h3>{props.title}</h3>
@@ -17,6 +19,7 @@ const Form = (props) => {
                     <option value="out" >Egreso</option>
                 </select>
                 }
+                <input type="date" name="date" value={date} onChange={e => setDate(e.target.value)} />
                 <input type="submit" defaultValue="Guardar" />
             </form>
         </>

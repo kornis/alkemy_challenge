@@ -9,12 +9,20 @@ class Main extends React.Component {
         movement_name: '',
         qty: 0,
         type: '',
+        date:'',
         data: null,
         loading: true,
         edit: false,
         dataToEdit: ""
     }
 
+    getTodayDate = () => {
+        const date = new Date();
+        const day = ("0" + date.getDate()).slice(-2);
+        const month = ("0" + (date.getMonth() + 1)).slice(-2);
+        const today = `${date.getFullYear()}-${month}-${day}`;
+        return today;
+    }
 
     fetchData = async () => {
         this.setState({
@@ -80,11 +88,13 @@ class Main extends React.Component {
         e.preventDefault();
         this.state.movement_name = e.target[0].value;
         this.state.qty = Number(e.target[1].value);
-        this.state.type = e.target[2].value;
         let info = {
             ...this.state
         }
+
+
         if (this.state.edit) {
+            info.date = e.target[2].value;
             await fetch('http://localhost:3000/movement/' + this.state.dataToEdit.id, {
                 method: 'PUT',
                 headers: {
@@ -93,6 +103,8 @@ class Main extends React.Component {
                 body: JSON.stringify(info)
             });
         } else {
+            info.type = e.target[2].value;
+            info.date = e.target[3].value;
             await fetch('http://localhost:3000/movement', {
                 method: 'POST',
                 headers: {
@@ -122,6 +134,7 @@ class Main extends React.Component {
                             title={this.state.edit ? "Editar registro" : "Nuevo Registro"}
                             movement_name={this.state.edit ? this.state.dataToEdit.movement_name : ""}
                             qty={this.state.edit ? this.state.dataToEdit.qty : ""}
+                            date={this.state.edit ? this.state.dataToEdit.date : this.getTodayDate()}
                             function={this.formHandler}
                             edit={this.state.edit}
                         />

@@ -9,7 +9,7 @@ const ListadoRegistros = (props) => {
             <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">Fecha</th>
                         <th scope="col">Movimiento</th>
                         <th scope="col">Valor</th>
                         <th scope="col">Entrada/salida</th>
@@ -19,7 +19,7 @@ const ListadoRegistros = (props) => {
                 <tbody>
                     {props.data.data.map((value, i) => {
                         return (<tr key={i + value}>
-                            <th scope="row">{value.id}</th>
+                            <th scope="row">{value.date}</th>
                             <td>{value.movement_name}</td>
                             <td>{value.qty}</td>
                             <td>{value.type}</td>

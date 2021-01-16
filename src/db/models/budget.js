@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     type:{
       type: DataTypes.ENUM('in','out'),
       nullable: false,
-    }
+    },
+    date: DataTypes.DATE
   }, {
     tableName: 'budget',
     paranoid: true,
