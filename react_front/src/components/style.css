@@ -100,4 +100,35 @@ footer {
     margin-top: 150px;
 }
 
+@media (max-width:568px){
+   .info_cards {
+       flex-direction: column;
+   }
+   .info_cards div {
+    margin-bottom: 10px;
+}
+
+   .input_data form {
+       flex-direction: column;
+   }
+   .input_data form input {
+       margin-bottom: 8px;
+   }
+}
+
+   @media (min-width:569px) and (max-width: 1000px) {
+    .input_data form input {
+        width: 102px;
+        font-size: 12px;
+        padding: 3px 5px;
+    }
+    .input_data form select {
+        width: 102px;
+        font-size: 12px;
+        padding: 3px 5px;
+    }
+
+   }
+
+
 
