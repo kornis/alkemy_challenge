@@ -25,8 +25,14 @@ module.exports = {
             const password = bcrypt.hashSync(req.body.password, 12);
             req.body.password = password;
             const response = await db.users.create({...req.body});
+            let payload = {
+                sub: response.id,
+                email: response.email,
+            }
+            const token = auth.sign(payload);
             return res.status(201).json({
                 data: response,
+                token,
                 message: 'User created...'
             })
         }catch(err){
@@ -38,17 +44,15 @@ module.exports = {
 
     },
 
-    login: async (req, res) => {
+    login: async (req, res, next) => {
         try{
         const user = await db.users.findOne({where:{email: req.body.email}});
         if(user && bcrypt.compareSync(req.body.password, user.password)){
             let payload = {
                 sub: user.id,
                 email: user.email,
-                exp: 1000 * 60 * 15
             }
             const token = auth.sign(payload);
-            
             let data = {
                 user:{
                     user_id: user.id,

@@ -5,11 +5,16 @@ const secret = process.env.SECRET;
 
 module.exports = {
     sign: (data) => {
-        const token = jwt.sign(data,secret);
+        const token = jwt.sign(data,secret,{expiresIn:60*15});
         return token;
     },
 
-    verify: (data) => {
-        return "";
+    verify: (token) => {
+    
+            const response = jwt.verify(token, secret, (err, data) => {
+                return {err, data}});
+            return response;
+     
     }
+
 }

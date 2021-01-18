@@ -12,7 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM('in','out'),
       nullable: false,
     },
-    date: DataTypes.DATE
+    date: DataTypes.DATE,
+    user_id: {
+      type: DataTypes.BIGINT,
+      foreignKey: true,
+    }
   }, {
     tableName: 'budget',
     paranoid: true,
@@ -21,7 +25,10 @@ module.exports = (sequelize, DataTypes) => {
     deletedAt: "deleted_at",
   });
   budget.associate = function(models) {
-    // associations can be defined here
+    budget.belongsTo(models.users,{
+      as: "user",
+      foreignKey: "user_id"
+    })
   };
   return budget;
 };

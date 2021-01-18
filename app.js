@@ -4,13 +4,13 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const methodOverride = require('method-override');
 const cors = require('cors');
-
+const authMiddleware = require('./src/middlewares/auth');
+const loggedInMiddleware = require('./src/middlewares/loggedIn');
 const indexRouter = require('./src/routes/index');
 const usersRouter = require('./src/routes/users');
 
-
 const app = express();
-
+app.use(authMiddleware);
 app.use(methodOverride('_method'));
 app.use(logger('dev'));
 app.use(express.json());

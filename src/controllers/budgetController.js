@@ -45,7 +45,8 @@ module.exports = {
 
     storeMovement: async (req, res) => {
         const movement_obj = {
-            ...req.body
+            ...req.body,
+            user_id: req.userLogged.id
         }
         try {
             const movement = await db.budget.create(movement_obj);
@@ -89,7 +90,7 @@ module.exports = {
     deleteMovement: async (req, res) => {
         try {
             const movement = await db.budget.destroy({ where: { id: req.params.id } });
-            console.log(movement);
+           
             if (movement) {
                 return res.status(201).json({
                     data: "id: " + req.params.id,
