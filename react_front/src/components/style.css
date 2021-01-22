@@ -37,12 +37,19 @@ select {
 }
 
 header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90px;
+    padding-top: 20px; 
+    padding-bottom: 20px; 
     background-color: rgb(147, 176, 201);
     margin-bottom: 15px;
+}
+
+.session-info {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.session-info p {
+    margin-right: 8px;
 }
 
 .login {

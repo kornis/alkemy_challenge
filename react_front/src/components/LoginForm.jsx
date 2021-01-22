@@ -1,4 +1,4 @@
-import React ,{useState} from 'react'
+import React , {useState} from 'react'
 import { Link } from 'react-router-dom';
 
 
@@ -24,24 +24,25 @@ const handleSubmit = async (e) => {
     });
     const data = await response.json();
      if (data.data) {
-        sessionStorage.setItem('session',JSON.stringify(data.data.session.token));
+        sessionStorage.setItem('session',JSON.stringify(data.data));
+        console.log(data.data)
         window.location = '/';
         
     }else{
-        
+
         setErrors({
             errors: {
                 ...data.errors
-            } 
+            },
+            error: data.error 
         })
     } 
-    
-
 }
     return(
        
         <div className="form_container">
             <h3>Presupuesto personal | Login</h3>
+            {errors.error && <p style={{color: "red", fontWeight:"bold"}}>{errors.error}</p>}
             <form className="form login_form"  onSubmit={handleSubmit}>
                 <input type="text" name="email" placeholder="Ingrese email" defaultValue={email} onChange={e => setEmail(e.target.value)} />
                 <p className="formError"><small>{errors.errors && errors.errors.email ? errors.errors.email.msg : ""}</small></p>
@@ -50,6 +51,7 @@ const handleSubmit = async (e) => {
                 <input type="submit" value="Iniciar sesión" />
             </form>
             <p>No tenes cuenta? <Link to="/users/registro"> Registrate acá </Link></p>
+            
         </div>
     )
 }

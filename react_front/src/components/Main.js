@@ -22,9 +22,9 @@ this.fetchData = async () => {
     this.setState({
         loading: true
     })
-    const token = JSON.parse(sessionStorage.getItem('session'));
+    const userData = JSON.parse(sessionStorage.getItem('session'));
     const headers = {
-        'Authentication': 'Bearer ' + token
+        'Authentication': 'Bearer ' + userData.session.token
     }
 
     try {
@@ -32,13 +32,14 @@ this.fetchData = async () => {
             headers: headers
         });
         const data = await response.json();
+        console.log(data)
         if(data.data){
             this.setState({
                 data: data.data,
                 loading: false,
             })
         }
-        else if(data.error === "Not logged in"){
+        else if(data.error){
             window.location = "/users/login";
         }
         else{
@@ -50,6 +51,7 @@ this.fetchData = async () => {
         }
     } catch (err) {
         console.error(err);
+        window.location = "/users/login";
     }
 }
 }
