@@ -1,4 +1,5 @@
 const db = require('../db/models');
+const { validationResult } = require('express-validator')
 
 module.exports = {
     getAllMovements: async (req, res) => {
@@ -44,6 +45,14 @@ module.exports = {
     },
 
     storeMovement: async (req, res) => {
+        const errors = validationResult(req);
+        if(errors.isEmpty){
+            return res.status(401).json({
+                status: res.statusCode,
+                errors: errors.mapped(),
+                message: "Cannot create movement."
+            })
+        }
         const movement_obj = {
             ...req.body,
             user_id: req.userLogged.id
@@ -63,6 +72,14 @@ module.exports = {
     },
 
     updateMovement: async (req, res) => {
+        const errors = validationResult(req);
+        if(errors.isEmpty){
+            return res.status(401).json({
+                status: res.statusCode,
+                errors: errors.mapped(),
+                message: "Cannot update movement."
+            })
+        }
         const movement_obj = {
             movement_name: req.body.movement_name,
             qty: req.body.qty,

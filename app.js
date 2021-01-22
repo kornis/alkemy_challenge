@@ -5,7 +5,7 @@ const logger = require('morgan');
 const methodOverride = require('method-override');
 const cors = require('cors');
 const authMiddleware = require('./src/middlewares/auth');
-const loggedInMiddleware = require('./src/middlewares/loggedIn');
+
 const indexRouter = require('./src/routes/index');
 const usersRouter = require('./src/routes/users');
 
@@ -18,6 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

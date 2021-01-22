@@ -5,16 +5,55 @@ import InfoCard from './InfoCard';
 import Form from './Form.jsx';
 class Main extends React.Component {
 
-    state = {
-        movement_name: '',
-        qty: 0,
-        type: '',
-        date:'',
-        data: null,
-        loading: true,
-        edit: false,
-        dataToEdit: ""
+constructor(){
+    super();
+this.state = {
+    movement_name: '',
+    qty: 0,
+    type: '',
+    date:'',
+    data: null,
+    loading: true,
+    edit: false,
+    dataToEdit: ""
+}
+
+this.fetchData = async () => {
+    this.setState({
+        loading: true
+    })
+    const token = JSON.parse(sessionStorage.getItem('session'));
+    const headers = {
+        'Authentication': 'Bearer ' + token
     }
+
+    try {
+        const response = await fetch('http://localhost:3000/movements',{
+            headers: headers
+        });
+        const data = await response.json();
+        if(data.data){
+            this.setState({
+                data: data.data,
+                loading: false,
+            })
+        }
+        else if(data.error === "Not logged in"){
+            window.location = "/users/login";
+        }
+        else{
+            console.log(data);
+            this.setState({
+                data: [],
+                loading: false
+            })
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+}
+    
 
     getTodayDate = () => {
         const date = new Date();
@@ -24,21 +63,6 @@ class Main extends React.Component {
         return today;
     }
 
-    fetchData = async () => {
-        this.setState({
-            loading: true
-        })
-        try {
-            const response = await fetch('http://localhost:3000/movements');
-            const data = await response.json();
-            this.setState({
-                data: data.data,
-                loading: false,
-            })
-        } catch (err) {
-            console.error(err);
-        }
-    }
 
     componentDidMount() {
         this.fetchData();
