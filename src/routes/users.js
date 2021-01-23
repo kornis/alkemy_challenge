@@ -4,7 +4,7 @@ const userController = require('../controllers/userController');
 const {login: loginValidation} = require('../validations');
 
 
-router.get('/', userController.getAllUsers);
+router.post('/email', userController.getEmail);
 router.post('/register',loginValidation , userController.storeUser);
 router.post('/login', loginValidation, userController.login);
 

@@ -5,14 +5,20 @@ const { validationResult } = require('express-validator');
 
 
 module.exports = {
-    getAllUsers: async (req, res) => {
+    getEmail: async (req, res) => {
         try{
-            const users = await db.users.findAll();
-            return res.status(200).json({
-                status: res.statusCode,
-                data: users,
-                message: "Users found..."
-            })
+            const user = await db.users.findOne({where:{email: req.body.email}});
+            if(user){
+                return res.status(400).json({
+                    status: res.statusCode,
+                    message: "Email Exists"
+                })
+            }else{
+                return res.status(200).json({
+                    status: res.statusCode,
+                    message: "Email ok"
+                })
+            }
         }
             catch(err){
                 console.log(err);
@@ -38,23 +44,26 @@ module.exports = {
             const password = bcrypt.hashSync(req.body.password, 12);
             req.body.password = password;
             const response = await db.users.create({...req.body});
-            let payload = {
-                sub: response.id,
-                email: response.email,
+        
+                let payload = {
+                    sub: response.id,
+                    email: response.email,
+                }
+                const token = auth.sign(payload);
+                return res.status(201).json({
+                    status: res.statusCode,
+                    data: response,
+                    token,
+                    message: 'User created...'
+                })
+            
             }
-            const token = auth.sign(payload);
-            return res.status(201).json({
-                status: res.statusCode,
-                data: response,
-                token,
-                message: 'User created...'
-            })
-        }catch(err){
-            console.log(err);
+        catch(err){
+            console.log(err.errors[0].message);
             return res.status(500).json({
-                error: "Error, try again later",
+                error: err.errors[0].message,
                 status: res.statusCode,
-                message: 'Error, try again later...'
+                message: err.errors[0].message
             })
         }
 

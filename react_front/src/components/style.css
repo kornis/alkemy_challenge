@@ -92,6 +92,10 @@ header {
     outline: none;
 }
 
+.invalid {
+    border: red 2px solid !important
+}
+
 .card {
     display: flex;
     justify-content: center;

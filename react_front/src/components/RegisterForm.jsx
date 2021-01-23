@@ -51,13 +51,40 @@ const RegisterForm = () => {
         }
     }
 
+    const verifyEmail = async (e) => {
+        
+        setEmail(e.target.value);
+        let input = document.querySelector('.email_register');
+        const body = {
+            email: input.value
+        }
+        const response = await fetch('http://localhost:3000/users/email',
+        {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'Application/JSON'
+            }
+        })
+
+        const data = await response.json();
+        if(data.status === 400){
+            input.classList.add('invalid')
+            setErrors({error: "El email ya existe"});
+        }else{
+            input.classList.remove('invalid')
+            setErrors({error: ""});
+        }
+
+    }
+
     return(
         <>
         <div className="form_container">
             <form className="form register_form" onSubmit={e => handleSubmit(e)}>
                 <h3>Presupuesto personal | Registro</h3>
                 {errors.error && <p style={{color: "red", fontWeight:"bold"}}>{errors.error}</p>}
-                <input type="text" name="email" placeholder="Ingrese email" defaultValue={email} onChange={e => setEmail(e.target.value)} />
+                <input type="text" className="email_register" name="email" placeholder="Ingrese email" defaultValue={email} onChange={e => verifyEmail(e)} />
                 <input type="password" name="password" placeholder="Contraseña" defaultValue={password} onChange={e => setPassword(e.target.value)} />
                 <input type="submit" value="Registrarse" />
             </form>

@@ -5,7 +5,10 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        email: DataTypes.STRING,
+        email: {
+            type: DataTypes.STRING,
+            unique: true,
+        },
         password: DataTypes.STRING,
         token: DataTypes.STRING,
         deleted_at: DataTypes.DATE,
