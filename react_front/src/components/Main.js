@@ -23,8 +23,11 @@ this.fetchData = async () => {
         loading: true
     })
     const userData = JSON.parse(sessionStorage.getItem('session'));
-    const headers = {
-        'Authentication': 'Bearer ' + userData.session.token
+    let headers = {}
+    if(userData){
+        headers = {
+            'Authentication': 'Bearer ' + userData.session.token
+        }
     }
 
     try {
@@ -32,7 +35,7 @@ this.fetchData = async () => {
             headers: headers
         });
         const data = await response.json();
-        console.log(data)
+
         if(data.data){
             this.setState({
                 data: data.data,
@@ -43,7 +46,6 @@ this.fetchData = async () => {
             window.location = "/users/login";
         }
         else{
-            console.log(data);
             this.setState({
                 data: [],
                 loading: false

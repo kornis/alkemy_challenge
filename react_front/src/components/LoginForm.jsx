@@ -25,12 +25,11 @@ const handleSubmit = async (e) => {
     const data = await response.json();
      if (data.data) {
         sessionStorage.setItem('session',JSON.stringify(data.data));
-        console.log(data.data)
         window.location = '/';
         
     }else{
 
-        setErrors({
+        setErrors({ 
             errors: {
                 ...data.errors
             },

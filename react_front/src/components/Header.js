@@ -5,7 +5,7 @@ function Header() {
         sessionStorage.removeItem('session');
         window.location = '/users/login';
     }
-    const userData = JSON.parse(sessionStorage.getItem('session'));
+    const userData = JSON.parse(sessionStorage.getItem('session')) || {user: {email: "" }};
     return (
         <>
             <header className="container-fluid">

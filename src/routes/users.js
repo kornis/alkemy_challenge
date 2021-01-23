@@ -5,7 +5,7 @@ const {login: loginValidation} = require('../validations');
 
 
 router.get('/', userController.getAllUsers);
-router.post('/register', userController.storeUser);
+router.post('/register',loginValidation , userController.storeUser);
 router.post('/login', loginValidation, userController.login);
 
 module.exports = router;
